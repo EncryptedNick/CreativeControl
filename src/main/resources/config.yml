@@ -1,6 +1,11 @@
 # Configuration for CreativeControl written by XorNick. "chatcontrol.admin" to override what's listed here.
 # Written with love <3
 
+
+#==============================
+#         Protection
+#==============================
+
 ## Toggle whether or not you'd like to block the following actions triggered by players in creative.
 block:
   pvp: true
@@ -19,8 +24,18 @@ block-place-blacklist:
     - 57
 
 block-break-blacklist:
-  enabled: truwe
+  enabled: true
     ### Should be the numeral IDs for blocks. Use this for reference: http://minecraft-ids.grahamedgecombe.com/
     ### Blocks breaking diamond blocks by default.
     blacklist:
       - 57
+
+
+#==============================
+#         Storage
+#==============================
+
+## Determines whether or not you'd like the player's survival inventory to be stored and cleared while in Creative,
+## then swapped back when they go back to Survival.
+inventoryStorage:
+  enabled: true
