@@ -7,13 +7,20 @@ block:
   dropItems: true
   chests: true
   itemPickup: true
-
+  blockBreak: true
+  spawnEggs: true
 
 ## Enable / disable what blocks you are allowed to place.
-block-blacklist:
+block-place-blacklist:
   enabled: true
   ### Should be the numeral IDs for blocks. Use this for reference: http://minecraft-ids.grahamedgecombe.com/
-  ### Blocks diamond blocks by default.
+  ### Blocks placing diamond blocks by default.
   blacklist:
     - 57
 
+block-break-blacklist:
+  enabled: truwe
+    ### Should be the numeral IDs for blocks. Use this for reference: http://minecraft-ids.grahamedgecombe.com/
+    ### Blocks breaking diamond blocks by default.
+    blacklist:
+      - 57

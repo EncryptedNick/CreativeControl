@@ -10,7 +10,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -61,7 +63,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onCreativeBlockPlace(BlockPlaceEvent event) {
-        if (!plugin.getConfig().getBoolean("block-blacklist.enabled", true)) {
+        if (!plugin.getConfig().getBoolean("block-place-blacklist.enabled", true)) {
             return;
         }
         Player player = event.getPlayer();
@@ -116,6 +118,40 @@ public class PlayerListener implements Listener {
             return;
         }
         // We're not going to send the player a message, that'd be a bit spammy if they're in events like huge drop parties.
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onCreativeBlockBreak(BlockBreakEvent event) {
+        if (!plugin.getConfig().getBoolean("block-break-blacklist", true)) {
+            return;
+        }
+        Player player = event.getPlayer();
+
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            return;
+        }
+        if (player.hasPermission("creativecontrol.admin")) {
+            return;
+        }
+        List<Integer> blacklistedBlocks = plugin.getConfig().getIntegerList("block-break-blacklist.blacklisted");
+        Block block = event.getBlock();
+
+        if (!blacklistedBlocks.contains(block.getTypeId())) {
+            return;
+        }
+        player.sendMessage(ChatColor.RED + "You are not permitted to do this. Are you in the right mode?");
+        event.setCancelled(true);
+    }
+
+    @EventHandler // Block creature spawning (with monster eggs)
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+        if (!plugin.getConfig().getBoolean("block.spawnEggs")) {
+            return;
+        }
+        if (event.getSpawnReason() != CreatureSpawnEvent.SpawnReason.SPAWNER_EGG) {
+            return;
+        }
         event.setCancelled(true);
     }
 }
