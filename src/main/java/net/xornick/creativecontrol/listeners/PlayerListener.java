@@ -3,11 +3,20 @@ package net.xornick.creativecontrol.listeners;
 import net.xornick.creativecontrol.CreativeControl;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.block.DoubleChest;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+
+import java.util.List;
 
 public class PlayerListener implements Listener {
 
@@ -30,6 +39,83 @@ public class PlayerListener implements Listener {
             return;
         }
         cPlayer.sendMessage(ChatColor.RED + "You are not permitted to do this. Are you in the right mode?");
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onCreativePlayerDropItem(PlayerDropItemEvent event) {
+        if (!plugin.getConfig().getBoolean("block.dropItems", true)) {
+            return;
+        }
+        Player player = event.getPlayer();
+
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            return;
+        }
+        if (player.hasPermission("creativecontrol.admin")) {
+            return;
+        }
+        player.sendMessage(ChatColor.RED + "You are not permitted to do this. Are you in the right mode?");
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onCreativeBlockPlace(BlockPlaceEvent event) {
+        if (!plugin.getConfig().getBoolean("block-blacklist.enabled", true)) {
+            return;
+        }
+        Player player = event.getPlayer();
+
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            return;
+        }
+        if (player.hasPermission("creativecontrol.admin")) {
+            return;
+        }
+        List<Integer> blacklistedBlocks = plugin.getConfig().getIntegerList("block-blacklist.blacklist");
+        Block block = event.getBlock();
+
+        if (!blacklistedBlocks.contains(block.getTypeId())) {
+            return;
+        }
+        player.sendMessage(ChatColor.RED + "You are not permitted to do this. Are you in the right mode?");
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onCreativeChestOpen(InventoryOpenEvent event) {
+        if (!plugin.getConfig().getBoolean("block.chests", true)) {
+            return;
+        }
+        if (! (event.getInventory().getHolder() instanceof Chest) && ! (event.getInventory().getHolder() instanceof DoubleChest)) {
+            return;
+        }
+        Player player = (Player) event.getPlayer();
+
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            return;
+        }
+        if (player.hasPermission("creativecontrol.admin")) {
+            return;
+        }
+        player.sendMessage(ChatColor.RED + "You are not permitted to do this. Are you in the right mode?");
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onCreativePlayerPickupItem(PlayerPickupItemEvent event) {
+        if (!plugin.getConfig().getBoolean("block.itemPickup", true)) {
+            return;
+        }
+        Player player = event.getPlayer();
+
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            return;
+        }
+        if (player.hasPermission("creativecontrol.admin")) {
+            return;
+        }
+        // We're not going to send the player a message, that'd be a bit spammy if they're in events like huge drop parties.
         event.setCancelled(true);
     }
 }

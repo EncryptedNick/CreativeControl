@@ -1,6 +1,19 @@
-# Configuration for CreativeControl written by XorNick.
+# Configuration for CreativeControl written by XorNick. "chatcontrol.admin" to override what's listed here.
 # Written with love <3
 
-
+## Toggle whether or not you'd like to block the following actions triggered by players in creative.
 block:
   pvp: true
+  dropItems: true
+  chests: true
+  itemPickup: true
+
+
+## Enable / disable what blocks you are allowed to place.
+block-blacklist:
+  enabled: true
+  ### Should be the numeral IDs for blocks. Use this for reference: http://minecraft-ids.grahamedgecombe.com/
+  ### Blocks diamond blocks by default.
+  blacklist:
+    - 57
+
