@@ -74,7 +74,7 @@ public class PlayerListener implements Listener {
         if (player.hasPermission("creativecontrol.admin")) {
             return;
         }
-        List<Integer> blacklistedBlocks = plugin.getConfig().getIntegerList("block-blacklist.blacklist");
+        List<Integer> blacklistedBlocks = plugin.getConfig().getIntegerList("block-place-blacklist.blacklist");
         Block block = event.getBlock();
 
         if (!blacklistedBlocks.contains(block.getTypeId())) {

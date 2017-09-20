@@ -23,12 +23,13 @@ block-place-blacklist:
   blacklist:
     - 57
 
+## Enable / disable what blocks you are allowed to break.
 block-break-blacklist:
   enabled: true
     ### Should be the numeral IDs for blocks. Use this for reference: http://minecraft-ids.grahamedgecombe.com/
     ### Blocks breaking diamond blocks by default.
-    blacklist:
-      - 57
+  blacklist:
+    - 57
 
 
 #==============================
@@ -38,4 +39,4 @@ block-break-blacklist:
 ## Determines whether or not you'd like the player's survival inventory to be stored and cleared while in Creative,
 ## then swapped back when they go back to Survival.
 inventoryStorage:
-  enabled: true
+  enabled: false
