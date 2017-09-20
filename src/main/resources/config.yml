@@ -12,7 +12,6 @@ block:
   dropItems: true
   chests: true
   itemPickup: true
-  blockBreak: true
   spawnEggs: true
 
 ## Enable / disable what blocks you are allowed to place.
