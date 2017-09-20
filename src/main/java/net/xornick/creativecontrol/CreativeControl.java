@@ -1,5 +1,6 @@
 package net.xornick.creativecontrol;
 
+import net.xornick.creativecontrol.commands.CommandReload;
 import net.xornick.creativecontrol.inventories.InventoryManager;
 import net.xornick.creativecontrol.listeners.PlayerListener;
 import org.bukkit.plugin.PluginManager;
@@ -13,6 +14,7 @@ public final class CreativeControl extends JavaPlugin {
     public void onEnable() {
         instance = this;
         registerListeners();
+        getCommand("ccreload").setExecutor(new CommandReload());
     }
 
     private void registerListeners() {

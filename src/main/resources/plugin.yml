@@ -1,3 +1,6 @@
 name: CreativeControl
 version: ${project.version}
 main: net.xornick.creativecontrol.CreativeControl
+commands:
+  ccreload:
+    description: Primary plugin command
