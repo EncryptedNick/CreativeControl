@@ -13,6 +13,7 @@ public final class CreativeControl extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        saveDefaultConfig();
         registerListeners();
         getCommand("ccreload").setExecutor(new CommandReload());
     }
