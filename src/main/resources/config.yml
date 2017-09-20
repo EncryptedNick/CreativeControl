@@ -23,14 +23,13 @@ block-place-blacklist:
   blacklist:
     - 57
 
-## Enable / disable what blocks you are allowed to break.
+## Enable / disable what blocks you are allowed to place.
 block-break-blacklist:
   enabled: true
-    ### Should be the numeral IDs for blocks. Use this for reference: http://minecraft-ids.grahamedgecombe.com/
-    ### Blocks breaking diamond blocks by default.
+  ### Should be the numeral IDs for blocks. Use this for reference: http://minecraft-ids.grahamedgecombe.com/
+  ### Blocks breaking diamond blocks by default.
   blacklist:
     - 57
-
 
 #==============================
 #         Storage

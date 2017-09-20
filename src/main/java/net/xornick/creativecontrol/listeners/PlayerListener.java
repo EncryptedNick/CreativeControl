@@ -62,29 +62,6 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onCreativeBlockPlace(BlockPlaceEvent event) {
-        if (!plugin.getConfig().getBoolean("block-place-blacklist.enabled", true)) {
-            return;
-        }
-        Player player = event.getPlayer();
-
-        if (player.getGameMode() != GameMode.CREATIVE) {
-            return;
-        }
-        if (player.hasPermission("creativecontrol.admin")) {
-            return;
-        }
-        List<Integer> blacklistedBlocks = plugin.getConfig().getIntegerList("block-place-blacklist.blacklist");
-        Block block = event.getBlock();
-
-        if (!blacklistedBlocks.contains(block.getTypeId())) {
-            return;
-        }
-        player.sendMessage(ChatColor.RED + "You are not permitted to do this. Are you in the right mode?");
-        event.setCancelled(true);
-    }
-
-    @EventHandler
     public void onCreativeChestOpen(InventoryOpenEvent event) {
         if (!plugin.getConfig().getBoolean("block.chests", true)) {
             return;
@@ -122,8 +99,8 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onCreativeBlockBreak(BlockBreakEvent event) {
-        if (!plugin.getConfig().getBoolean("block-break-blacklist", true)) {
+    public void onCreativeBlockPlace(BlockPlaceEvent event) {
+        if (!plugin.getConfig().getBoolean("block-place-blacklist.enabled", true)) {
             return;
         }
         Player player = event.getPlayer();
@@ -134,7 +111,30 @@ public class PlayerListener implements Listener {
         if (player.hasPermission("creativecontrol.admin")) {
             return;
         }
-        List<Integer> blacklistedBlocks = plugin.getConfig().getIntegerList("block-break-blacklist.blacklisted");
+        List<Integer> blacklistedBlocks = plugin.getConfig().getIntegerList("block-place-blacklist.blacklist");
+        Block block = event.getBlock();
+
+        if (!blacklistedBlocks.contains(block.getTypeId())) {
+            return;
+        }
+        player.sendMessage(ChatColor.RED + "You are not permitted to do this. Are you in the right mode?");
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onCreativeBlockBreak(BlockBreakEvent event) {
+        if (!plugin.getConfig().getBoolean("block-break-blacklist.enabled", true)) {
+            return;
+        }
+        Player player = event.getPlayer();
+
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            return;
+        }
+        if (player.hasPermission("creativecontrol.admin")) {
+            return;
+        }
+        List<Integer> blacklistedBlocks = plugin.getConfig().getIntegerList("block-break-blacklist.blacklist");
         Block block = event.getBlock();
 
         if (!blacklistedBlocks.contains(block.getTypeId())) {
